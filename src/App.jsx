@@ -4,8 +4,6 @@ import "./App.css";
 import Experience from "./components/Experience";
 import { Suspense, useLayoutEffect, useRef } from "react";
 import { Environment, OrbitControls } from "@react-three/drei";
-import logo from "/logo-mindpop.svg";
-import textureBG from "/texture-bg.png";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
