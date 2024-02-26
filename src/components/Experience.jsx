@@ -40,7 +40,7 @@ function Intro() {
 
 const MiniStars = () => {
   const ref = useRef();
-  const numPoints = 8000;
+  const numPoints = 5000;
 
   const [sphere] = useState(() =>
     random.inSphere(new Float32Array(numPoints), { radius: 100 })
