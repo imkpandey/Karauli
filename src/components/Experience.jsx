@@ -10,7 +10,7 @@ import {
   useAnimations,
   Center,
 } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import * as THREE from "three";
 import Ground from "./Ground";
@@ -31,16 +31,44 @@ function Intro() {
   const [vec] = useState(() => new THREE.Vector3());
   return useFrame((state) => {
     state.camera.position.lerp(
-      vec.set(state.mouse.x * 5, 3 + state.mouse.y * 2, 24),
-      0.05
+      vec.set(state.mouse.x * 4, 3 + state.mouse.y * 2, 25),
+      0.04
     );
     state.camera.lookAt(0, 0, 0);
   });
 }
 
-function Stars(props) {
+const MiniStars = () => {
   const ref = useRef();
   const numPoints = 8000;
+
+  const [sphere] = useState(() =>
+    random.inSphere(new Float32Array(numPoints), { radius: 100 })
+  );
+
+  useFrame((state, delta) => {
+    ref.current.rotation.x -= delta / 50;
+    ref.current.rotation.y -= delta / 30;
+  });
+
+  return (
+    <group rotation={[0, 0, Math.PI / 4]} position={[0, 10, 0]}>
+      <Points ref={ref} positions={sphere} frustumCulled={false}>
+        <PointMaterial
+          transparent
+          color={[7.2, 4.9, 10.2]}
+          size={0.2}
+          sizeAttenuation={true}
+          depthWrite={false}
+        />
+      </Points>
+    </group>
+  );
+};
+
+function Stars(props) {
+  const ref = useRef();
+  const numPoints = 5000;
 
   const [sphere] = useState(() =>
     random.inSphere(new Float32Array(numPoints), { radius: 100 })
@@ -56,8 +84,8 @@ function Stars(props) {
       <Points ref={ref} positions={sphere} frustumCulled={false} {...props}>
         <PointMaterial
           transparent
-          color={[1.2, 4.9, 10.2]}
-          size={0.3}
+          color={[4.2, 4.9, 10.2]}
+          size={0.5}
           sizeAttenuation={true}
           depthWrite={false}
         />
@@ -153,6 +181,7 @@ const Experience = () => {
           </mesh> */}
         {/* <MovingPoints /> */}
         <Stars />
+        <MiniStars />
         <EffectComposer>
           {/* <N8AO aoRadius={1} intensity={2} /> */}
           {/* <TiltShift2 blur={0.5} /> */}
