@@ -9,6 +9,10 @@ import {
   Point,
   useAnimations,
   Center,
+  useScroll,
+  Html,
+  Text,
+  Line,
 } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef, useState } from "react";
@@ -20,7 +24,11 @@ import {
   N8AO,
   TiltShift2,
 } from "@react-three/postprocessing";
-import { random } from "maath";
+import { easing, random } from "maath";
+import tunnel from "tunnel-rat";
+import Planets from "./Planets";
+import Orbs from "./Orbs";
+import { Scene } from "./Scene";
 
 function Model(props) {
   const { scene } = useGLTF("/earth-transformed.glb");
@@ -31,7 +39,7 @@ function Intro() {
   const [vec] = useState(() => new THREE.Vector3());
   return useFrame((state) => {
     state.camera.position.lerp(
-      vec.set(state.mouse.x * 4, 3 + state.mouse.y * 2, 25),
+      vec.set(state.mouse.x * 4, 1 + state.mouse.y, 25),
       0.04
     );
     state.camera.lookAt(0, 0, 0);
@@ -40,10 +48,10 @@ function Intro() {
 
 const MiniStars = () => {
   const ref = useRef();
-  const numPoints = 5000;
+  const numPoints = 8000;
 
   const [sphere] = useState(() =>
-    random.inSphere(new Float32Array(numPoints), { radius: 100 })
+    random.inSphere(new Float32Array(numPoints), { radius: 1000 })
   );
 
   useFrame((state, delta) => {
@@ -52,12 +60,12 @@ const MiniStars = () => {
   });
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]} position={[0, 10, 0]}>
-      <Points ref={ref} positions={sphere} frustumCulled={false}>
+    <group rotation={[0, 0, Math.PI / 4]} position={[0, 10, -200]}>
+      <Points ref={ref} positions={sphere} frustumCulled={true}>
         <PointMaterial
           transparent
           color={[7.2, 4.9, 10.2]}
-          size={0.2}
+          size={0.35}
           sizeAttenuation={true}
           depthWrite={false}
         />
@@ -68,10 +76,11 @@ const MiniStars = () => {
 
 function Stars(props) {
   const ref = useRef();
-  const numPoints = 5000;
+  const numPoints = 8000;
 
-  const [sphere] = useState(() =>
-    random.inSphere(new Float32Array(numPoints), { radius: 100 })
+  const [sphere] = useState(
+    () => random.inSphere(new Float32Array(numPoints), { radius: 1500 })
+    // random.inBox(new Float32Array(numPoints), { sides: [100, 200, 100] })
   );
 
   useFrame((state, delta) => {
@@ -80,15 +89,9 @@ function Stars(props) {
   });
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]} position={[0, 10, 0]}>
-      <Points ref={ref} positions={sphere} frustumCulled={false} {...props}>
-        <PointMaterial
-          transparent
-          color={[4.2, 4.9, 10.2]}
-          size={0.5}
-          sizeAttenuation={true}
-          depthWrite={false}
-        />
+    <group rotation={[0, 0, Math.PI / 4]} position={[0, 10, -200]}>
+      <Points ref={ref} positions={sphere} frustumCulled={true} {...props}>
+        <PointMaterial color={[4.2, 4.9, 10.2]} size={0.75} />
       </Points>
     </group>
   );
@@ -96,19 +99,42 @@ function Stars(props) {
 
 const Experience = () => {
   const earth = useTexture("/earth.jpg");
+  const ref = useRef();
+  const scroll = useScroll();
+  const starsRef = useRef();
+
+  useFrame((state, delta) => {
+    if (scroll.offset > 0 && scroll.offset < 0.4) {
+      ref.current.position.z = 2000 * scroll.offset;
+    }
+
+    if (scroll.offset > 0.5) {
+      ref.current.position.z = 2000 * scroll.offset;
+      starsRef.current.position.z = -2000;
+    } else {
+      starsRef.current.position.z = 0;
+    }
+
+    // if (scroll.offset > 0.52 && scroll.offset < 0.7) {
+    //   state.scene.background = new THREE.Color("#ffffff");
+    // } else {
+    //   state.scene.background = new THREE.Color("#000000");
+    // }
+
+    // if (scroll.offset > 0.25 && scroll.offset < 0.5) {
+    //   ref.current.position.z = 2000 * scroll.offset;
+    // }
+
+    // if (scroll.offset > 0.2 && scroll.offset < 0.5) {
+    //   ref.current.position.z = 3000 * scroll.offset;
+    // }
+  });
+
   return (
     <>
-      <group position={[0, -1, 0]}>
-        {/* <Moon rotation={[0, Math.PI, 0]} position={[0, 0, 8]} /> */}
-        {/* <Center>
-          <GodModel
-            rotation={[0, Math.PI, 0]}
-            position={[0, -60, -40]}
-            scale={10}
-          />
-        </Center> */}
-        {/* <Float floatIntensity={1.25} speed={2}> */}
-        {/* <mesh receiveShadow castShadow position={[30, 0, 8]}>
+      <group ref={ref} position={[0, 5, 0]}>
+        {/* <group position={[0, 0, -20]}>
+          <mesh receiveShadow castShadow position={[20, 0, -20]}>
             <sphereGeometry args={[4, 128, 64]} />
             <meshStandardMaterial
               emissive="#A162F1"
@@ -116,82 +142,74 @@ const Experience = () => {
               toneMapped={false}
               color="#A162F1"
             />
-          </mesh> */}
-        {/* </Float> */}
-
-        {/* <mesh receiveShadow castShadow position={[0, 10, 8]}>
-          <sphereGeometry args={[4, 128, 64]} />
-          <meshStandardMaterial
-            emissive="#0000FF"
-            emissiveIntensity={2.5}
-            toneMapped={false}
-            color="#03ADDF"
-          />
-        </mesh> */}
-
-        {/* <mesh receiveShadow castShadow position={[0, -10, 8]}>
-          <sphereGeometry args={[4, 128, 64]} />
-          <meshStandardMaterial
-            emissive="#04B500"
-            emissiveIntensity={2.5}
-            toneMapped={false}
-            color="#04B500"
-          />
-        </mesh>
-        {/* <mesh receiveShadow castShadow position={[0, -30, 8]}>
-          <sphereGeometry args={[4, 128, 64]} />
-          <meshStandardMaterial
-            emissive="#FFC800"
-            emissiveIntensity={2.5}
-            toneMapped={false}
-            color="#FFC800"
-          />
-        </mesh>
-        <mesh receiveShadow castShadow position={[0, -50, 8]}>
-          <sphereGeometry args={[4, 128, 64]} />
-          <meshStandardMaterial
-            emissive="#FB6B01"
-            emissiveIntensity={2.5}
-            toneMapped={false}
-            color="#FB6B01"
-          />
-        </mesh> */}
-
-        {/* <mesh receiveShadow castShadow position={[0, -20, 8]}>
-          <sphereGeometry args={[64, 128, 64]} />
-          <meshStandardMaterial map={earth} />
-        </mesh> */}
-        {/* <mesh receiveShadow castShadow position={[15, 15, 0]}>
-            <torusGeometry args={[3, 0.3, 128, 64]} />
+          </mesh>
+          <mesh receiveShadow castShadow position={[10, 15, -20]}>
+            <sphereGeometry args={[4, 128, 64]} />
             <meshStandardMaterial
-              emissive="#ff00ff"
+              emissive="#A162F1"
               emissiveIntensity={2.5}
               toneMapped={false}
-              color="#ff00ff"
+              color="#A162F1"
             />
           </mesh>
-          <mesh receiveShadow castShadow position={[-15, 15, 0]}>
-            <torusGeometry args={[3, 0.3, 128, 64]} />
+          <mesh receiveShadow castShadow position={[-10, 15, -20]}>
+            <sphereGeometry args={[4, 128, 64]} />
             <meshStandardMaterial
-              emissive="#ff00ff"
+              emissive="#A162F1"
               emissiveIntensity={2.5}
               toneMapped={false}
-              color="#ff00ff"
+              color="#A162F1"
             />
-          </mesh> */}
+          </mesh>
+          <mesh receiveShadow castShadow position={[-20, 0, -20]}>
+            <sphereGeometry args={[4, 128, 64]} />
+            <meshStandardMaterial
+              emissive="#A162F1"
+              emissiveIntensity={2.5}
+              toneMapped={false}
+              color="#A162F1"
+            />
+          </mesh>
+          <mesh receiveShadow castShadow position={[10, -15, -20]}>
+            <sphereGeometry args={[4, 128, 64]} />
+            <meshStandardMaterial
+              emissive="#A162F1"
+              emissiveIntensity={2.5}
+              toneMapped={false}
+              color="#A162F1"
+            />
+          </mesh>
+          <mesh receiveShadow castShadow position={[-10, -15, -20]}>
+            <sphereGeometry args={[4, 128, 64]} />
+            <meshStandardMaterial
+              emissive="#A162F1"
+              emissiveIntensity={2.5}
+              toneMapped={false}
+              color="#A162F1"
+            />
+          </mesh>
+        </group> */}
+
         {/* <MovingPoints /> */}
-        <Stars />
-        <MiniStars />
-        <EffectComposer>
-          {/* <N8AO aoRadius={1} intensity={2} /> */}
-          {/* <TiltShift2 blur={0.5} /> */}
-          <Bloom mipmapBlur luminanceThreshold={0.5} />
-        </EffectComposer>
-        {/* <Ground /> */}
+        <group position={[0, 1, -500]}>
+          <group ref={starsRef} position={[0, 0, -200]}>
+            <Stars />
+            <MiniStars />
+          </group>
+          <Planets />
+          <ambientLight intensity={Math.PI} />
+          <directionalLight position={[10, 10, 5]} intensity={5} />
+          <EffectComposer>
+            {/* <N8AO aoRadius={1} intensity={2} /> */}
+            {/* <TiltShift2 blur={0.5} /> */}
+            <Bloom mipmapBlur luminanceThreshold={1} />
+          </EffectComposer>
+        </group>
+        <Ground />
+        <group position={[0, 0, -1500]}>
+          <Orbs />
+        </group>
       </group>
-      <ambientLight intensity={3.5} />
-      <spotLight position={[-30, 10, 0]} intensity={2.7} />
-      <directionalLight position={[-10, 0, -10]} intensity={2.3} />
       <Intro />
     </>
   );
