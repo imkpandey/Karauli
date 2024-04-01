@@ -399,6 +399,13 @@ canvas {
 }
 
 .sub-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -411,6 +418,7 @@ canvas {
   line-height: 1.4;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   overflow: hidden;
+  pointer-events: none;
 
   .left-block {
     width: 50%;

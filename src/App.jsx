@@ -22,6 +22,7 @@ const t = tunnel();
 const t2 = tunnel();
 const t3 = tunnel();
 const t4 = tunnel();
+const t5 = tunnel();
 
 const HawanBackground = () => {
   const ref = useRef();
@@ -42,7 +43,6 @@ const HawanBackground = () => {
       }
     };
 
-    // Add when modal is open and remove when modal is closed
     if (isModalOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
@@ -92,7 +92,7 @@ const HawanBackground = () => {
     }
   });
   return (
-    <t.In>
+    <t5.In>
       <div ref={ref} className="hawan-background">
         <div className="hawan-bg">
           <img src="hawan-bg.png" alt="Hawan Background" />
@@ -134,7 +134,7 @@ const HawanBackground = () => {
           </div>
         </div>
       )}
-    </t.In>
+    </t5.In>
   );
 };
 
@@ -171,6 +171,7 @@ const SubContent = () => {
   const refFive = useRef();
   const refSix = useRef();
   const scroll = useScroll();
+
   useFrame((state, delta) => {
     easing.damp(
       ref.current.style,
@@ -246,74 +247,72 @@ const SubContent = () => {
   });
   return (
     <t4.In>
-      <div>
-        <div className="sub-content">
-          <div className="left-block">
-            <div ref={ref} className="left-block-one">
-              <p className="sub-text-one">
-                After many generations of <br />
-                <span>vedic learning</span>, <span>practice </span>&
-                <span> experimentation</span>,
-              </p>
-              <p className="sub-text-two">
-                <span>Guruji</span> created this program
-              </p>
-              <p>
-                for the current turbulent times faced by humanity. Having its
-                roots in the Vedas and Upanishads, the process is implemented
-                with the precision of a mathematical formula.
-              </p>
-            </div>
-            <div ref={refThree} className="left-block-two">
-              <p className="top-text">
-                With a clear understanding of the scientific processes behind
-                Vedic practice, <span>Guruji has devised the process of</span>{" "}
-                <span className="orange-text">&quot;Guru Kripa&quot;</span>{" "}
-              </p>
-              <hr />
-              <p>
-                In simple terms, this is a top down approach, similar to how a
-                parent provides specific needs to a child in order to make them
-                realize their full potential.
-              </p>
-            </div>
+      <div className="sub-content">
+        <div className="left-block">
+          <div ref={ref} className="left-block-one">
+            <p className="sub-text-one">
+              After many generations of <br />
+              <span>vedic learning</span>, <span>practice </span>&
+              <span> experimentation</span>,
+            </p>
+            <p className="sub-text-two">
+              <span>Guruji</span> created this program
+            </p>
+            <p>
+              for the current turbulent times faced by humanity. Having its
+              roots in the Vedas and Upanishads, the process is implemented with
+              the precision of a mathematical formula.
+            </p>
           </div>
-          <div className="right-block">
-            <div ref={refTwo} className="right-block-one">
-              <p>
-                This process has been very carefully studied similar to{" "}
-                <span className="bg-text">scientific research</span>
-                <span> & is calibrated every</span>
-                <span className="bg-text"> Amavashya</span>{" "}
-                <span>
-                  or new moon day with the help of Shakti or positive energy.
-                </span>
-              </p>
-            </div>
-            <div ref={refFour} className="right-block-two">
-              <p className="top-text">
-                This process removes the layers of accumulated negativity,
-                allowing an individual to connect to their true{" "}
-                <span>&quot;DHARMA&quot;</span>
-              </p>{" "}
-              <hr />
-              <p>
-                This process is a rebirth. You consciously decide to peel off
-                the layers of time to discover your true potential and purpose
-                in this lifetime.
-              </p>
-            </div>
+          <div ref={refThree} className="left-block-two">
+            <p className="top-text">
+              With a clear understanding of the scientific processes behind
+              Vedic practice, <span>Guruji has devised the process of</span>{" "}
+              <span className="orange-text">&quot;Guru Kripa&quot;</span>{" "}
+            </p>
+            <hr />
+            <p>
+              In simple terms, this is a top down approach, similar to how a
+              parent provides specific needs to a child in order to make them
+              realize their full potential.
+            </p>
           </div>
         </div>
-        <div ref={refFive} className="unity-text">
-          <p className="top-text">UNITING</p>
-          <div ref={refSix} className="shivtext">
-            <p className="shiv-shakti">
-              <span className="main-text">Shiv</span> &{" "}
-              <span className="main-text">Shakti</span>
+        <div className="right-block">
+          <div ref={refTwo} className="right-block-one">
+            <p>
+              This process has been very carefully studied similar to{" "}
+              <span className="bg-text">scientific research</span>
+              <span> & is calibrated every</span>
+              <span className="bg-text"> Amavashya</span>{" "}
+              <span>
+                or new moon day with the help of Shakti or positive energy.
+              </span>
             </p>
-            <p className="bottom-text">FOR BETTER LIVING</p>
           </div>
+          <div ref={refFour} className="right-block-two">
+            <p className="top-text">
+              This process removes the layers of accumulated negativity,
+              allowing an individual to connect to their true{" "}
+              <span>&quot;DHARMA&quot;</span>
+            </p>{" "}
+            <hr />
+            <p>
+              This process is a rebirth. You consciously decide to peel off the
+              layers of time to discover your true potential and purpose in this
+              lifetime.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div ref={refFive} className="unity-text">
+        <p className="top-text">UNITING</p>
+        <div ref={refSix} className="shivtext">
+          <p className="shiv-shakti">
+            <span className="main-text">Shiv</span> &{" "}
+            <span className="main-text">Shakti</span>
+          </p>
+          <p className="bottom-text">FOR BETTER LIVING</p>
         </div>
       </div>
     </t4.In>
@@ -412,9 +411,6 @@ function App() {
 
   return (
     <div ref={appRef} className="app">
-      <div className="hero-container">
-        <t.Out />
-      </div>
       <div className="hero-heading">
         <div className="text-block">
           <t2.Out />
@@ -423,8 +419,10 @@ function App() {
       <div className="overlay"></div>
       <t3.Out />
       <div className="center-block">
+        <t5.Out />
         <t4.Out />
       </div>
+
       <Canvas
         // gl={{ alpha: true }}
         camera={{
@@ -437,16 +435,14 @@ function App() {
         {/* <OrbitControls makeDefault /> */}
         {/* <color attach="background" args={["#000"]} /> */}
         <ScrollControls damping={0.2} pages={20}>
-          {/* <Lights /> */}
           <Suspense fallback={null}>
             <Experience />
-            {/* <HeroContent /> */}
-            {/* <HeroHeading /> */}
             <ShaktiBackground />
             <HawanBackground />
             <SubContent />
+            {/* <HeroContent /> */}
+            {/* <HeroHeading /> */}
           </Suspense>
-          {/* <Effects /> */}
         </ScrollControls>
       </Canvas>
     </div>
