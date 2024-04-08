@@ -13,6 +13,7 @@ import {
   Html,
   Text,
   Line,
+  Environment,
 } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef, useState } from "react";
@@ -29,6 +30,7 @@ import tunnel from "tunnel-rat";
 import Planets from "./Planets";
 import Orbs from "./Orbs";
 import { Scene } from "./Scene";
+import Blob from "./Blob";
 
 function Model(props) {
   const { scene } = useGLTF("/earth-transformed.glb");
@@ -48,10 +50,10 @@ function Intro() {
 
 const MiniStars = () => {
   const ref = useRef();
-  const numPoints = 8000;
+  const numPoints = 4000;
 
   const [sphere] = useState(() =>
-    random.inSphere(new Float32Array(numPoints), { radius: 1000 })
+    random.inSphere(new Float32Array(numPoints), { radius: 800 })
   );
 
   useFrame((state, delta) => {
@@ -65,7 +67,7 @@ const MiniStars = () => {
         <PointMaterial
           transparent
           color={[7.2, 4.9, 10.2]}
-          size={0.35}
+          size={2.35}
           sizeAttenuation={true}
           depthWrite={false}
         />
@@ -76,7 +78,7 @@ const MiniStars = () => {
 
 function Stars(props) {
   const ref = useRef();
-  const numPoints = 8000;
+  const numPoints = 4000;
 
   const [sphere] = useState(
     () => random.inSphere(new Float32Array(numPoints), { radius: 1500 })
@@ -84,14 +86,14 @@ function Stars(props) {
   );
 
   useFrame((state, delta) => {
-    ref.current.rotation.x -= delta / 20;
-    ref.current.rotation.y -= delta / 10;
+    ref.current.rotation.x -= delta / 50;
+    ref.current.rotation.y -= delta / 30;
   });
 
   return (
     <group rotation={[0, 0, Math.PI / 4]} position={[0, 10, -200]}>
       <Points ref={ref} positions={sphere} frustumCulled={true} {...props}>
-        <PointMaterial color={[4.2, 4.9, 10.2]} size={0.75} />
+        <PointMaterial color={[4.2, 4.9, 10.2]} size={2.75} />
       </Points>
     </group>
   );
@@ -102,6 +104,7 @@ const Experience = () => {
   const ref = useRef();
   const scroll = useScroll();
   const starsRef = useRef();
+  const [environment, setEnvironment] = useState(false);
 
   useFrame((state, delta) => {
     if (scroll.offset > 0 && scroll.offset < 0.4) {
@@ -113,6 +116,12 @@ const Experience = () => {
       starsRef.current.position.z = -2000;
     } else {
       starsRef.current.position.z = 0;
+    }
+
+    if (scroll.offset > 0.5) {
+      setEnvironment(true);
+    } else {
+      setEnvironment(false);
     }
 
     // if (scroll.offset > 0.52 && scroll.offset < 0.7) {
@@ -194,7 +203,7 @@ const Experience = () => {
         <group position={[0, 1, -500]}>
           <group ref={starsRef} position={[0, 0, -200]}>
             <Stars />
-            <MiniStars />
+            {/* <MiniStars /> */}
           </group>
           <Planets />
           <ambientLight intensity={Math.PI} />
@@ -206,8 +215,89 @@ const Experience = () => {
           </EffectComposer>
         </group>
         <Ground />
-        <group position={[0, 0, -1500]}>
-          <Orbs />
+        <group position={[0, -10, -1500]}>
+          <Blob position={[0, 80, 0]} scale={10} />
+          <Text fontSize={10} position={[0, 105, 0]} font="Gilroy-SemiBold.ttf">
+            Depression
+          </Text>
+          <Blob position={[-80, 20, 0]} scale={10} />
+          <Text
+            fontSize={10}
+            position={[-80, 45, 0]}
+            font="Gilroy-SemiBold.ttf"
+          >
+            Anxiety
+          </Text>
+          <Blob position={[80, 20, 0]} scale={10} />
+          <Text fontSize={10} position={[80, 45, 0]} font="Gilroy-SemiBold.ttf">
+            Stress
+          </Text>
+          <Blob position={[-50, -60, 0]} scale={10} />
+          <Text
+            fontSize={10}
+            position={[-50, -40, 0]}
+            font="Gilroy-SemiBold.ttf"
+          >
+            Delusional Thoughts
+          </Text>
+          <Blob position={[50, -60, 0]} scale={10} />
+          <Text
+            fontSize={10}
+            position={[50, -40, 0]}
+            font="Gilroy-SemiBold.ttf"
+          >
+            Intrusive Thoughts
+          </Text>
+
+          <group rotation={[0, 0, Math.PI]}>
+            <Blob position={[0, 80, -200]} scale={10} />
+            <Text
+              fontSize={10}
+              position={[0, 60, -200]}
+              font="Gilroy-SemiBold.ttf"
+              rotation={[0, 0, Math.PI]}
+            >
+              Paranormal Thoughts
+            </Text>
+            <Blob position={[-80, 20, -200]} scale={10} />
+            <Text
+              fontSize={10}
+              position={[-80, 0, -200]}
+              font="Gilroy-SemiBold.ttf"
+              rotation={[0, 0, Math.PI]}
+            >
+              Guilt
+            </Text>
+            <Blob position={[80, 20, -200]} scale={10} />
+            <Text
+              fontSize={10}
+              position={[80, 0, -200]}
+              font="Gilroy-SemiBold.ttf"
+              rotation={[0, 0, Math.PI]}
+            >
+              Fear
+            </Text>
+            <Blob position={[-50, -60, -200]} scale={10} />
+            <Text
+              fontSize={10}
+              position={[-50, -80, -200]}
+              font="Gilroy-SemiBold.ttf"
+              rotation={[0, 0, Math.PI]}
+            >
+              Grief
+            </Text>
+            <Blob position={[50, -60, -200]} scale={10} />
+            <Text
+              fontSize={10}
+              position={[50, -80, -200]}
+              font="Gilroy-SemiBold.ttf"
+              rotation={[0, 0, Math.PI]}
+            >
+              Anger
+            </Text>
+          </group>
+
+          {environment && <Environment preset="studio" />}
         </group>
       </group>
       <Intro />

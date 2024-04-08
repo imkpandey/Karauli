@@ -52,6 +52,14 @@ const HawanBackground = () => {
   useFrame((state, delta) => {
     easing.damp(
       ref.current.style,
+      "display",
+      scroll.offset > 0.5 ? "block" : "none",
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      ref.current.style,
       "opacity",
       scroll.offset > 0.78 ? 1 : 0,
       0.2,
@@ -434,7 +442,7 @@ function App() {
       >
         {/* <OrbitControls makeDefault /> */}
         {/* <color attach="background" args={["#000"]} /> */}
-        <ScrollControls damping={0.2} pages={20}>
+        <ScrollControls damping={0.2} pages={25}>
           <Suspense fallback={null}>
             <Experience />
             <ShaktiBackground />

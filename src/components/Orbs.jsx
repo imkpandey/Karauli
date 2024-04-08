@@ -11,6 +11,10 @@ import {
   useScroll,
   Center,
   Text,
+  MeshTransmissionMaterial,
+  MeshDistortMaterial,
+  MeshRefractionMaterial,
+  MeshReflectorMaterial,
 } from "@react-three/drei";
 import { easing, random } from "maath";
 import { useRef } from "react";
@@ -122,7 +126,7 @@ function Orbs() {
         intensity={1000}
       />
       <group position={[0, 0, -100]} rotation={[0, Math.PI / 2, 0]}>
-        <Clouds scale={0.5} limit={spherical.length}>
+        {/* <Clouds scale={0.5} limit={spherical.length}>
           <Cloud
             segments={spherical.length}
             seed={1}
@@ -142,7 +146,7 @@ function Orbs() {
             //     },
             //   })}
           />
-        </Clouds>
+        </Clouds> */}
       </group>
 
       {/* <Clouds
@@ -181,10 +185,14 @@ function Orbs() {
       <group ref={groupRef}>
         <mesh ref={refOne} position={[0, 15, 120]}>
           <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={1}
+          <MeshTransmissionMaterial
+            background={new THREE.Color("#ff0000")}
+            clearcoat={1}
+            backside={false}
+            transmission={1}
+            roughness={0}
+            thickness={3.5}
+            color="#000000"
           />
         </mesh>
         <Text fontSize={3} position={[0, 22, 120]} font="Gilroy-SemiBold.ttf">
@@ -192,10 +200,14 @@ function Orbs() {
         </Text>
         <mesh ref={refTwo} position={[20, 0, 120]}>
           <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={1}
+          <MeshTransmissionMaterial
+            background={new THREE.Color("#ff0000")}
+            clearcoat={1}
+            backside={false}
+            transmission={1}
+            roughness={0}
+            thickness={3.5}
+            color="#000000"
           />
         </mesh>
         <Text fontSize={3} position={[32, 0, 120]} font="Gilroy-SemiBold.ttf">
@@ -204,10 +216,12 @@ function Orbs() {
 
         <mesh ref={refThree} position={[-20, 0, 120]}>
           <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={1}
+          <MeshTransmissionMaterial
+            thickness={3.5}
+            anisotropy={1}
+            anisotropicBlur={0.5}
+            transmission={1}
+            clearcoat={1}
           />
         </mesh>
         <Text fontSize={3} position={[-32, 0, 120]} font="Gilroy-SemiBold.ttf">
@@ -216,10 +230,14 @@ function Orbs() {
 
         <mesh ref={refFour} position={[15, -25, 120]}>
           <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={1}
+          <MeshTransmissionMaterial
+            background={new THREE.Color("#ff0000")}
+            clearcoat={1}
+            backside={false}
+            transmission={1}
+            roughness={0}
+            thickness={3.5}
+            color="#000000"
           />
         </mesh>
         <Text fontSize={3} position={[15, -33, 120]} font="Gilroy-SemiBold.ttf">
@@ -228,10 +246,12 @@ function Orbs() {
 
         <mesh ref={refFive} position={[-15, -25, 120]}>
           <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={1}
+          <MeshTransmissionMaterial
+            background={new THREE.Color("#ff0000")}
+            backside
+            backsideThickness={5}
+            thickness={2}
+            color="#000000"
           />
         </mesh>
         <Text
