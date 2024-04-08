@@ -651,7 +651,7 @@ canvas {
     font-weight: 400;
   }
 
-  @media (max-width: 768px) {
+  @media only screen and (max-width: 916px) {
     font-size: 1.5rem;
 
     span {
@@ -673,7 +673,7 @@ canvas {
   font-weight: 300;
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
 
-  @media (max-width: 768px) {
+  @media only screen and (max-width: 916px) {
     font-size: 1rem;
   }
 }
@@ -711,7 +711,7 @@ canvas {
     }
   }
 
-  @media (max-width: 768px) {
+  @media only screen and (max-width: 916px) {
     button {
       font-size: 0.7rem;
       padding: 0.3rem;
@@ -794,7 +794,7 @@ canvas {
   }
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 916px) {
   .sub-content {
     gap: 1rem;
     padding: 1rem;
@@ -806,7 +806,7 @@ canvas {
 
       .left-block-one {
         width: 50%;
-        transform: translateY(170%);
+        transform: translateY(200%);
 
         .sub-text-one {
           span {
@@ -819,6 +819,7 @@ canvas {
 
       .left-block-two {
         width: 100%;
+        transform: translateY(200%);
         span {
           font-size: 1rem;
         }
@@ -830,7 +831,7 @@ canvas {
 
       .right-block-one {
         padding-right: 1rem;
-        transform: translateY(350%);
+        transform: translateY(370%);
         span {
           font-weight: 500;
           padding: 0.1rem;

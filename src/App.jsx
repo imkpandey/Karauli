@@ -187,7 +187,7 @@ const SubContent = () => {
       scroll.offset > 0.1 && scroll.offset < 0.16
         ? "translateY(0%)"
         : scroll.offset >= 0.16
-        ? "translateY(-150%)"
+        ? "translateY(-200%)"
         : "",
       0.2,
       delta
@@ -199,7 +199,7 @@ const SubContent = () => {
       scroll.offset > 0.1 && scroll.offset < 0.16
         ? "translateY(20%)"
         : scroll.offset >= 0.16
-        ? "translateY(-350%)"
+        ? "translateY(-370%)"
         : "",
       0.2,
       delta
@@ -211,7 +211,7 @@ const SubContent = () => {
       scroll.offset > 0.16 && scroll.offset < 0.22
         ? "translateY(0%)"
         : scroll.offset >= 0.22
-        ? "translateY(-150%)"
+        ? "translateY(-200%)"
         : "",
       0.2,
       delta
