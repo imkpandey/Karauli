@@ -61,26 +61,49 @@ function Ground() {
         <planeGeometry attach="geometry" args={[450, 300]} />
         <meshStandardMaterial map={shiva} transparent />
       </mesh>
-      <Text
-        // font="../assets/fonts/Gilroy-SemiBold.ttf"
-        fontSize={6}
-        position={[-2, 18, -40]}
-      >
+      <Text font="Gilroy-Regular.ttf" fontSize={6} position={[-2, 11, -40]}>
         Welcome To
       </Text>
       <Text
-        // font="../assets/fonts/Gilroy-SemiBold.ttf"
+        font="Gilroy-Regular.ttf"
+        color={"#000000"}
+        fillOpacity={0.8}
         fontSize={6}
-        position={[0, 10, -40]}
+        position={[-2.5, 11, -40.1]}
       >
-        Karauli Shankar
+        Welcome To
+      </Text>
+      <Text font="Gilroy-SemiBold.ttf" fontSize={6} position={[0, 5, -40]}>
+        KARAULI SHANKAR
       </Text>
       <Text
-        // font="../assets/fonts/Gilroy-SemiBold.ttf"
-        fontSize={15}
-        position={[0, -10, -40]}
+        font="Gilroy-SemiBold.ttf"
+        color={"#000000"}
+        fillOpacity={1}
+        fontSize={6}
+        position={[0.5, 5, -40.1]}
       >
-        M A H A D E V &nbsp; D H A M
+        KARAULI SHANKAR
+      </Text>
+      <Text
+        font="Gilroy-Regular.ttf"
+        fontSize={15}
+        position={[0, -15, -59]}
+        letterSpacing={0.2}
+        scale={1.5}
+      >
+        MAHADEV DHAM
+      </Text>
+      <Text
+        font="Gilroy-Regular.ttf"
+        color={"#000000"}
+        fillOpacity={0.8}
+        fontSize={15}
+        position={[2, -15, -59.1]}
+        letterSpacing={0.2}
+        scale={1.5}
+      >
+        MAHADEV DHAM
       </Text>
       <mesh position={[0, -10, -58]}>
         <planeGeometry attach="geometry" args={[300, 180]} />

@@ -53,7 +53,7 @@ const HawanBackground = () => {
     easing.damp(
       ref.current.style,
       "display",
-      scroll.offset > 0.5 ? "block" : "none",
+      scroll.offset > 0.5 && scroll.offset < 0.85 ? "block" : "none",
       0.2,
       delta
     );
@@ -448,8 +448,11 @@ function App() {
             <ShaktiBackground />
             <HawanBackground />
             <SubContent />
+            <Environment near={0.1} far={1000} background files="nebula.hdr" />
+
             {/* <HeroContent /> */}
             {/* <HeroHeading /> */}
+            {/* <OrbitControls /> */}
           </Suspense>
         </ScrollControls>
       </Canvas>

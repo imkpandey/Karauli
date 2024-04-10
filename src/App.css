@@ -581,6 +581,7 @@ canvas {
   height: 100vh;
   z-index: 1;
   pointer-events: none;
+  transition: 0.3s ease-in-out;
 }
 
 .hawan-bg {

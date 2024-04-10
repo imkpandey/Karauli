@@ -33,7 +33,7 @@ export default function Blob({ color, vec = new THREE.Vector3(), ...props }) {
       <Sphere
         castShadow
         onPointerEnter={() => (strength.current = 0.3)}
-        onPointerLeave={() => (strength.current = 0.05)}
+        onPointerLeave={() => (strength.current = 0)}
         ref={ref}
         args={[1.2, 128, 128]}
       >
@@ -51,7 +51,7 @@ export default function Blob({ color, vec = new THREE.Vector3(), ...props }) {
               colorA={"#fec5da"}
               colorB={"#d6e7f2"}
             /> */}
-          <Displace ref={displaceRef} strength={0.1} scale={2} />
+          <Displace ref={displaceRef} strength={0} scale={2} />
         </LayerMaterial>
       </Sphere>
       {/* <Pointer /> */}

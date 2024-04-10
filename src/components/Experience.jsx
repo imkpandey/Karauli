@@ -31,6 +31,9 @@ import Planets from "./Planets";
 import Orbs from "./Orbs";
 import { Scene } from "./Scene";
 import Blob from "./Blob";
+import { Trishul } from "./Trishul";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 function Model(props) {
   const { scene } = useGLTF("/earth-transformed.glb");
@@ -104,101 +107,55 @@ const Experience = () => {
   const ref = useRef();
   const scroll = useScroll();
   const starsRef = useRef();
-  const [environment, setEnvironment] = useState(false);
+  const orbsRef = useRef();
+  const innerOrbsRef = useRef();
+  const outerOrbsRef = useRef();
+  const textOneRef = useRef();
+  const textTwoRef = useRef();
+  const textThreeRef = useRef();
+  const textFourRef = useRef();
+  const textFiveRef = useRef();
 
   useFrame((state, delta) => {
     if (scroll.offset > 0 && scroll.offset < 0.4) {
       ref.current.position.z = 2000 * scroll.offset;
     }
 
-    if (scroll.offset > 0.5) {
+    if (scroll.offset > 0.5 && scroll.offset < 0.85) {
       ref.current.position.z = 2000 * scroll.offset;
+      starsRef.current.position.z = -2000;
+    } else if (scroll.offset > 0.85) {
       starsRef.current.position.z = -2000;
     } else {
       starsRef.current.position.z = 0;
     }
 
-    if (scroll.offset > 0.5) {
-      setEnvironment(true);
+    if (scroll.offset > 0.8) {
+      orbsRef.current.position.z = -2000;
+      // textOneRef.current.fontSize = 0;
+      // textTwoRef.current.fontSize = 0;
+      // textThreeRef.current.fontSize = 0;
+      // textFourRef.current.fontSize = 0;
+      // textFiveRef.current.fontSize = 0;
+      // innerOrbsRef.current.rotation.x = Math.PI / 2;
+      // innerOrbsRef.current.position.z = 190;
+      // innerOrbsRef.current.rotation.z += delta;
     } else {
-      setEnvironment(false);
+      orbsRef.current.position.z = -1500;
+      textOneRef.current.fontSize = 10;
+      textTwoRef.current.fontSize = 10;
+      textThreeRef.current.fontSize = 10;
+      textFourRef.current.fontSize = 10;
+      textFiveRef.current.fontSize = 10;
+      innerOrbsRef.current.rotation.x = 0;
+      innerOrbsRef.current.position.z = 0;
+      innerOrbsRef.current.rotation.z = 0;
     }
-
-    // if (scroll.offset > 0.52 && scroll.offset < 0.7) {
-    //   state.scene.background = new THREE.Color("#ffffff");
-    // } else {
-    //   state.scene.background = new THREE.Color("#000000");
-    // }
-
-    // if (scroll.offset > 0.25 && scroll.offset < 0.5) {
-    //   ref.current.position.z = 2000 * scroll.offset;
-    // }
-
-    // if (scroll.offset > 0.2 && scroll.offset < 0.5) {
-    //   ref.current.position.z = 3000 * scroll.offset;
-    // }
   });
 
   return (
     <>
       <group ref={ref} position={[0, 5, 0]}>
-        {/* <group position={[0, 0, -20]}>
-          <mesh receiveShadow castShadow position={[20, 0, -20]}>
-            <sphereGeometry args={[4, 128, 64]} />
-            <meshStandardMaterial
-              emissive="#A162F1"
-              emissiveIntensity={2.5}
-              toneMapped={false}
-              color="#A162F1"
-            />
-          </mesh>
-          <mesh receiveShadow castShadow position={[10, 15, -20]}>
-            <sphereGeometry args={[4, 128, 64]} />
-            <meshStandardMaterial
-              emissive="#A162F1"
-              emissiveIntensity={2.5}
-              toneMapped={false}
-              color="#A162F1"
-            />
-          </mesh>
-          <mesh receiveShadow castShadow position={[-10, 15, -20]}>
-            <sphereGeometry args={[4, 128, 64]} />
-            <meshStandardMaterial
-              emissive="#A162F1"
-              emissiveIntensity={2.5}
-              toneMapped={false}
-              color="#A162F1"
-            />
-          </mesh>
-          <mesh receiveShadow castShadow position={[-20, 0, -20]}>
-            <sphereGeometry args={[4, 128, 64]} />
-            <meshStandardMaterial
-              emissive="#A162F1"
-              emissiveIntensity={2.5}
-              toneMapped={false}
-              color="#A162F1"
-            />
-          </mesh>
-          <mesh receiveShadow castShadow position={[10, -15, -20]}>
-            <sphereGeometry args={[4, 128, 64]} />
-            <meshStandardMaterial
-              emissive="#A162F1"
-              emissiveIntensity={2.5}
-              toneMapped={false}
-              color="#A162F1"
-            />
-          </mesh>
-          <mesh receiveShadow castShadow position={[-10, -15, -20]}>
-            <sphereGeometry args={[4, 128, 64]} />
-            <meshStandardMaterial
-              emissive="#A162F1"
-              emissiveIntensity={2.5}
-              toneMapped={false}
-              color="#A162F1"
-            />
-          </mesh>
-        </group> */}
-
         {/* <MovingPoints /> */}
         <group position={[0, 1, -500]}>
           <group ref={starsRef} position={[0, 0, -200]}>
@@ -215,41 +172,56 @@ const Experience = () => {
           </EffectComposer>
         </group>
         <Ground />
-        <group position={[0, -10, -1500]}>
-          <Blob position={[0, 80, 0]} scale={10} />
-          <Text fontSize={10} position={[0, 105, 0]} font="Gilroy-SemiBold.ttf">
-            Depression
-          </Text>
-          <Blob position={[-80, 20, 0]} scale={10} />
-          <Text
-            fontSize={10}
-            position={[-80, 45, 0]}
-            font="Gilroy-SemiBold.ttf"
-          >
-            Anxiety
-          </Text>
-          <Blob position={[80, 20, 0]} scale={10} />
-          <Text fontSize={10} position={[80, 45, 0]} font="Gilroy-SemiBold.ttf">
-            Stress
-          </Text>
-          <Blob position={[-50, -60, 0]} scale={10} />
-          <Text
-            fontSize={10}
-            position={[-50, -40, 0]}
-            font="Gilroy-SemiBold.ttf"
-          >
-            Delusional Thoughts
-          </Text>
-          <Blob position={[50, -60, 0]} scale={10} />
-          <Text
-            fontSize={10}
-            position={[50, -40, 0]}
-            font="Gilroy-SemiBold.ttf"
-          >
-            Intrusive Thoughts
-          </Text>
+        <group ref={orbsRef} position={[0, -10, -1500]}>
+          <group ref={innerOrbsRef}>
+            <Blob position={[0, 80, 0]} scale={10} />
+            <Text
+              ref={textOneRef}
+              fontSize={10}
+              position={[0, 105, 0]}
+              font="Gilroy-SemiBold.ttf"
+            >
+              Depression
+            </Text>
+            <Blob position={[-80, 20, 0]} scale={10} />
+            <Text
+              ref={textTwoRef}
+              fontSize={10}
+              position={[-80, 45, 0]}
+              font="Gilroy-SemiBold.ttf"
+            >
+              Anxiety
+            </Text>
+            <Blob position={[80, 20, 0]} scale={10} />
+            <Text
+              ref={textThreeRef}
+              fontSize={10}
+              position={[80, 45, 0]}
+              font="Gilroy-SemiBold.ttf"
+            >
+              Stress
+            </Text>
+            <Blob position={[-50, -60, 0]} scale={10} />
+            <Text
+              ref={textFourRef}
+              fontSize={10}
+              position={[-50, -40, 0]}
+              font="Gilroy-SemiBold.ttf"
+            >
+              Delusional Thoughts
+            </Text>
+            <Blob position={[50, -60, 0]} scale={10} />
+            <Text
+              ref={textFiveRef}
+              fontSize={10}
+              position={[50, -40, 0]}
+              font="Gilroy-SemiBold.ttf"
+            >
+              Intrusive Thoughts
+            </Text>
+          </group>
 
-          <group rotation={[0, 0, Math.PI]}>
+          <group ref={outerOrbsRef} rotation={[0, 0, Math.PI]}>
             <Blob position={[0, 80, -200]} scale={10} />
             <Text
               fontSize={10}
@@ -296,8 +268,11 @@ const Experience = () => {
               Anger
             </Text>
           </group>
-
-          {environment && <Environment preset="studio" />}
+          <Trishul
+            position={[0, -300, 0]}
+            scale={15}
+            rotation={[-Math.PI / 2, 0, 0]}
+          />
         </group>
       </group>
       <Intro />
