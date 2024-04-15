@@ -18,6 +18,9 @@ import {
 } from "@react-three/drei";
 import { easing, random } from "maath";
 import { useRef } from "react";
+import { Trishul } from "./Trishul";
+import Blob from "./Blob";
+import { lerp } from "three/src/math/MathUtils.js";
 
 function Orbs() {
   const box = random.inBox(new Float32Array(100), { sides: [100, 100, 100] });
@@ -25,108 +28,104 @@ function Orbs() {
   const { width, height } = useThree((state) => state.viewport);
   const scroll = useScroll();
 
-  const refOne = useRef();
-  const refTwo = useRef();
-  const refThree = useRef();
-  const refFour = useRef();
-  const refFive = useRef();
-  const refSix = useRef();
-  const refSeven = useRef();
-  const refEight = useRef();
-  const refNine = useRef();
-  const refTen = useRef();
-  const groupRef = useRef();
-  const groupTwoRef = useRef();
+  const orbsRef = useRef();
+  const innerOrbsRef = useRef();
+  const outerOrbsRef = useRef();
+  const textOneRef = useRef();
+  const textTwoRef = useRef();
+  const textThreeRef = useRef();
+  const textFourRef = useRef();
+  const textFiveRef = useRef();
+  const textSixRef = useRef();
+  const textSevenRef = useRef();
+  const textEightRef = useRef();
+  const textNineRef = useRef();
+  const textTenRef = useRef();
+  const textElevenRef = useRef();
+  const textTwelveRef = useRef();
+
+  const targetPosition = new THREE.Vector3(0, -150, -170);
+  const targetRotation = new THREE.Euler(Math.PI / 2, 0, 0);
+
+  let animationStarted = false;
+  const animationDuration = 3;
+  let animationStartTime;
 
   useFrame((state, delta) => {
-    if (scroll.offset >= 0.63) {
-      state.scene.background = new THREE.Color("#ffffff");
-    } else {
-      state.scene.background = new THREE.Color("#000000");
+    if (scroll.offset > 0.8 && scroll.offset < 0.87) {
+      outerOrbsRef.current.position.z = -50;
     }
-    // if (scroll.offset >= 0.7 && scroll.offset <= 0.75) {
-    //   easing.damp(groupTwoRef.current.position, "z", 100, 0.2, delta);
-    //   if (scroll.offset >= 0.7) {
-    //     easing.damp(groupTwoRef.current.position, "z", 100, 0.2, delta);
-    //     // Define the delay between showing each mesh
-    //     const delay = 100; // in milliseconds
-    //     // Define the time offset for the first mesh
-    //     const initialDelay = 0; // in milliseconds
-    //     // Define an array of refs to loop through
-    //     const refs = [refOne, refTwo, refThree, refFour, refFive];
-    //     // Initialize a counter to keep track of the current mesh
-    //     let currentMeshIndex = 0;
-    //     // Function to show the next mesh with delay
-    //     const showNextMesh = () => {
-    //       // Show the current mesh
-    //       easing.damp(
-    //         refs[currentMeshIndex].current.position,
-    //         "z",
-    //         150,
-    //         0.2,
-    //         delta
-    //       );
-    //       // refs[currentMeshIndex].current.position.z = 150;
-    //       // Move to the next mesh in the array
-    //       currentMeshIndex++;
-    //       // Check if there are more meshes to show
-    //       if (currentMeshIndex < refs.length) {
-    //         // Schedule the next mesh to show after the delay
-    //         setTimeout(showNextMesh, delay);
-    //       }
-    //     };
-    //     // Start showing meshes after initial delay
-    //     setTimeout(showNextMesh, initialDelay);
-    //   }
-    // }
-    // if (scroll.offset > 0.7) {
-    //   easing.damp(groupRef.current.position, "z", 100, 0.2, delta);
-    //   if (scroll.offset > 0.7) {
-    //     easing.damp(groupRef.current.position, "z", 100, 0.2, delta);
-    //     // Define the delay between showing each mesh
-    //     const delay = 100; // in milliseconds
-    //     // Define the time offset for the first mesh
-    //     const initialDelay = 0; // in milliseconds
-    //     // Define an array of refs to loop through
-    //     const refs = [refSix, refSeven, refEight, refNine, refTen];
-    //     // Initialize a counter to keep track of the current mesh
-    //     let currentMeshIndex = 0;
-    //     // Function to show the next mesh with delay
-    //     const showNextMesh = () => {
-    //       // Show the current mesh
-    //       easing.damp(
-    //         refs[currentMeshIndex].current.position,
-    //         "z",
-    //         150,
-    //         0.2,
-    //         delta
-    //       );
-    //       // refs[currentMeshIndex].current.position.z = 150;
-    //       // Move to the next mesh in the array
-    //       currentMeshIndex++;
-    //       // Check if there are more meshes to show
-    //       if (currentMeshIndex < refs.length) {
-    //         // Schedule the next mesh to show after the delay
-    //         setTimeout(showNextMesh, delay);
-    //       }
-    //     };
-    //     // Start showing meshes after initial delay
-    //     setTimeout(showNextMesh, initialDelay);
-    //   }
-    // }
-    // groupRef.current.rotation.z += delta / 4;
+    if (scroll.offset > 0.8) {
+      orbsRef.current.position.z = -2000;
+      textOneRef.current.fontSize = 0;
+      textTwoRef.current.fontSize = 0;
+      textThreeRef.current.fontSize = 0;
+      textFourRef.current.fontSize = 0;
+      textFiveRef.current.fontSize = 0;
+      textSixRef.current.fontSize = 0;
+      textSevenRef.current.fontSize = 0;
+      textEightRef.current.fontSize = 0;
+      textNineRef.current.fontSize = 0;
+      textTenRef.current.fontSize = 0;
+      textElevenRef.current.fontSize = 0;
+      textTwelveRef.current.fontSize = 0;
+
+      // outerOrbsRef.current.rotation.x = Math.PI / 2;
+      // outerOrbsRef.current.position.z = -50;
+      // outerOrbsRef.current.rotation.z += delta / 2;
+      outerOrbsRef.current.scale.set(0.5, 0.5, 0.5);
+      innerOrbsRef.current.visible = false;
+    } else {
+      orbsRef.current.position.z = -1550;
+      textOneRef.current.fontSize = 10;
+      textTwoRef.current.fontSize = 10;
+      textThreeRef.current.fontSize = 10;
+      textFourRef.current.fontSize = 10;
+      textFiveRef.current.fontSize = 10;
+      textSixRef.current.fontSize = 10;
+      textSevenRef.current.fontSize = 10;
+      textEightRef.current.fontSize = 10;
+      textNineRef.current.fontSize = 10;
+      textTenRef.current.fontSize = 10;
+      textElevenRef.current.fontSize = 10;
+      textTwelveRef.current.fontSize = 10;
+      outerOrbsRef.current.rotation.x = 0;
+      outerOrbsRef.current.position.x = 0;
+      outerOrbsRef.current.position.y = 0;
+      outerOrbsRef.current.rotation.z = Math.PI;
+      innerOrbsRef.current.visible = true;
+    }
+
+    if (scroll.offset > 0.89 && !animationStarted) {
+      animationStarted = true;
+      animationStartTime = state.clock.elapsedTime;
+    }
+
+    if (animationStarted) {
+      const elapsedTime = state.clock.elapsedTime - animationStartTime;
+
+      const progress = Math.min(elapsedTime / animationDuration, 1);
+
+      outerOrbsRef.current.rotation.z += delta / 2;
+
+      outerOrbsRef.current.position.lerp(targetPosition, progress);
+      outerOrbsRef.current.rotation.x = lerp(
+        outerOrbsRef.current.rotation.x,
+        targetRotation.x,
+        progress
+      );
+
+      if (progress === 1) {
+        animationStarted = false;
+        animationStartTime = undefined;
+      }
+    }
   });
 
   return (
     <>
-      <spotLight
-        position={[300, 300, 300]}
-        decay={0.5}
-        penumbra={1}
-        intensity={1000}
-      />
-      <group position={[0, 0, -100]} rotation={[0, Math.PI / 2, 0]}>
-        {/* <Clouds scale={0.5} limit={spherical.length}>
+      {/* <group position={[0, 0, -100]} rotation={[0, Math.PI / 2, 0]}>
+        <Clouds scale={0.5} limit={spherical.length}>
           <Cloud
             segments={spherical.length}
             seed={1}
@@ -146,8 +145,8 @@ function Orbs() {
             //     },
             //   })}
           />
-        </Clouds> */}
-      </group>
+        </Clouds>
+      </group> */}
 
       {/* <Clouds
         renderOrder={1000}
@@ -182,186 +181,129 @@ function Orbs() {
           </Cloud>
         </Float>
       </Clouds> */}
-      <group ref={groupRef}>
-        <mesh ref={refOne} position={[0, 15, 120]}>
-          <sphereGeometry args={[4, 128]} />
-          <MeshTransmissionMaterial
-            background={new THREE.Color("#ff0000")}
-            clearcoat={1}
-            backside={false}
-            transmission={1}
-            roughness={0}
-            thickness={3.5}
-            color="#000000"
-          />
-        </mesh>
-        <Text fontSize={3} position={[0, 22, 120]} font="Gilroy-SemiBold.ttf">
-          Depression
-        </Text>
-        <mesh ref={refTwo} position={[20, 0, 120]}>
-          <sphereGeometry args={[4, 128]} />
-          <MeshTransmissionMaterial
-            background={new THREE.Color("#ff0000")}
-            clearcoat={1}
-            backside={false}
-            transmission={1}
-            roughness={0}
-            thickness={3.5}
-            color="#000000"
-          />
-        </mesh>
-        <Text fontSize={3} position={[32, 0, 120]} font="Gilroy-SemiBold.ttf">
-          Anxiety
-        </Text>
+      <group ref={orbsRef} position={[0, -10, -1550]}>
+        <group ref={innerOrbsRef}>
+          <Blob position={[0, 80, -50]} scale={10} />
+          <Text
+            ref={textOneRef}
+            fontSize={5}
+            position={[0, 105, -50]}
+            font="Gilroy-Medium.ttf"
+          >
+            Depression
+          </Text>
+          <Blob position={[-80, 20, -50]} scale={10} />
+          <Text
+            ref={textTwoRef}
+            fontSize={5}
+            position={[-120, 20, -50]}
+            font="Gilroy-Medium.ttf"
+          >
+            Anxiety
+          </Text>
+          <Blob position={[80, 20, -50]} scale={10} />
+          <Text
+            ref={textThreeRef}
+            fontSize={5}
+            position={[120, 20, -50]}
+            font="Gilroy-Medium.ttf"
+          >
+            Stress
+          </Text>
+          <Blob position={[-50, -60, -50]} scale={10} />
+          <Text
+            ref={textFourRef}
+            fontSize={5}
+            position={[-100, -55, -50]}
+            font="Gilroy-Medium.ttf"
+          >
+            Delusional
+          </Text>
+          <Text
+            ref={textElevenRef}
+            fontSize={5}
+            position={[-100, -68, -50]}
+            font="Gilroy-Medium.ttf"
+          >
+            Thoughts
+          </Text>
+          <Blob position={[50, -60, -50]} scale={10} />
+          <Text
+            ref={textFiveRef}
+            fontSize={5}
+            position={[100, -55, -50]}
+            font="Gilroy-Medium.ttf"
+          >
+            Intrusive
+          </Text>
+          <Text
+            ref={textTwelveRef}
+            fontSize={2}
+            position={[100, -68, -50]}
+            font="Gilroy-Medium.ttf"
+          >
+            Thoughts
+          </Text>
+        </group>
 
-        <mesh ref={refThree} position={[-20, 0, 120]}>
-          <sphereGeometry args={[4, 128]} />
-          <MeshTransmissionMaterial
-            thickness={3.5}
-            anisotropy={1}
-            anisotropicBlur={0.5}
-            transmission={1}
-            clearcoat={1}
-          />
-        </mesh>
-        <Text fontSize={3} position={[-32, 0, 120]} font="Gilroy-SemiBold.ttf">
-          Stress
-        </Text>
-
-        <mesh ref={refFour} position={[15, -25, 120]}>
-          <sphereGeometry args={[4, 128]} />
-          <MeshTransmissionMaterial
-            background={new THREE.Color("#ff0000")}
-            clearcoat={1}
-            backside={false}
-            transmission={1}
-            roughness={0}
-            thickness={3.5}
-            color="#000000"
-          />
-        </mesh>
-        <Text fontSize={3} position={[15, -33, 120]} font="Gilroy-SemiBold.ttf">
-          Delusional Thoughts
-        </Text>
-
-        <mesh ref={refFive} position={[-15, -25, 120]}>
-          <sphereGeometry args={[4, 128]} />
-          <MeshTransmissionMaterial
-            background={new THREE.Color("#ff0000")}
-            backside
-            backsideThickness={5}
-            thickness={2}
-            color="#000000"
-          />
-        </mesh>
-        <Text
-          fontSize={3}
-          position={[-15, -33, 120]}
-          font="Gilroy-SemiBold.ttf"
-        >
-          Intrusive Thoughts
-        </Text>
-      </group>
-
-      <group
-        ref={groupTwoRef}
-        rotation={[0, 0, Math.PI]}
-        position={[0, -10, -180]}
-      >
-        <mesh ref={refSix} position={[0, 10, 170]}>
-          <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={5}
-          />
-        </mesh>
-        <Text
-          fontSize={3}
-          position={[0, 18, 170]}
-          rotation={[0, 0, Math.PI]}
-          //   font="../assets/fonts/Gilroy-SemiBold.ttf"
-        >
-          Anger
-        </Text>
-
-        <mesh ref={refSeven} position={[20, 0, 170]}>
-          <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={5}
-          />
-        </mesh>
-        <Text
-          fontSize={3}
-          position={[30, 0, 170]}
-          font="Gilroy-SemiBold.ttf"
-          rotation={[0, 0, Math.PI]}
-        >
-          Guilt
-        </Text>
-
-        <mesh ref={refEight} position={[-20, 0, 170]}>
-          <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={5}
-          />
-        </mesh>
-        <Text
-          fontSize={3}
-          position={[-30, 0, 170]}
-          font="Gilroy-SemiBold.ttf"
-          rotation={[0, 0, Math.PI]}
-        >
-          Fear
-        </Text>
-
-        <mesh ref={refNine} position={[15, -25, 170]}>
-          <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={5}
-          />
-        </mesh>
-        <Text
-          fontSize={3}
-          position={[15, -33, 170]}
-          font="Gilroy-SemiBold.ttf"
-          rotation={[0, 0, Math.PI]}
-        >
-          Paranormal Thoughts
-        </Text>
-
-        <mesh ref={refTen} position={[-15, -25, 170]}>
-          <sphereGeometry args={[4, 128]} />
-          <meshStandardMaterial
-            color="#ff0000"
-            emissive="#ff0000"
-            emissiveIntensity={5}
-          />
-        </mesh>
-        <Text
-          fontSize={3}
-          position={[-15, -33, 170]}
-          font="Gilroy-SemiBold.ttf"
-          rotation={[0, 0, Math.PI]}
-        >
-          Grief
-        </Text>
-      </group>
-
-      {/* <mesh scale={8} position={[0, 0, -300]}>
-        <planeGeometry args={[width, height]} />
-        <meshStandardMaterial
-          color="#ffffff"
-          emissive="#ffffff"
-          emissiveIntensity={1.9}
+        <group ref={outerOrbsRef} rotation={[0, 0, Math.PI]}>
+          <Blob position={[0, 80, -300]} scale={10} />
+          <Text
+            ref={textSixRef}
+            fontSize={10}
+            position={[0, 60, -300]}
+            font="Gilroy-Medium.ttf"
+            rotation={[0, 0, Math.PI]}
+          >
+            Paranormal Thoughts
+          </Text>
+          <Blob position={[-80, 20, -300]} scale={10} />
+          <Text
+            ref={textSevenRef}
+            fontSize={10}
+            position={[-80, 0, -300]}
+            font="Gilroy-Medium.ttf"
+            rotation={[0, 0, Math.PI]}
+          >
+            Guilt
+          </Text>
+          <Blob position={[80, 20, -300]} scale={10} />
+          <Text
+            ref={textEightRef}
+            fontSize={10}
+            position={[80, 0, -300]}
+            font="Gilroy-Medium.ttf"
+            rotation={[0, 0, Math.PI]}
+          >
+            Fear
+          </Text>
+          <Blob position={[-50, -60, -300]} scale={10} />
+          <Text
+            ref={textNineRef}
+            fontSize={10}
+            position={[-50, -80, -300]}
+            font="Gilroy-Medium.ttf"
+            rotation={[0, 0, Math.PI]}
+          >
+            Grief
+          </Text>
+          <Blob position={[50, -60, -300]} scale={10} />
+          <Text
+            ref={textTenRef}
+            fontSize={10}
+            position={[50, -80, -300]}
+            font="Gilroy-Medium.ttf"
+            rotation={[0, 0, Math.PI]}
+          >
+            Anger
+          </Text>
+        </group>
+        <Trishul
+          position={[0, -300, -200]}
+          scale={15}
+          rotation={[-Math.PI / 2, 0, 0]}
         />
-      </mesh> */}
+      </group>
     </>
   );
 }

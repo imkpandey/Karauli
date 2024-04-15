@@ -17,12 +17,15 @@ import ReactLenis from "@studio-freight/react-lenis";
 import tunnel from "tunnel-rat";
 import Lights from "./components/Lights";
 import Effects from "./components/Effects";
+import TestimonialModal from "./components/TestimonialModal";
+import Navbar from "./components/Navbar";
 
 const t = tunnel();
 const t2 = tunnel();
 const t3 = tunnel();
 const t4 = tunnel();
 const t5 = tunnel();
+const t6 = tunnel();
 
 const HawanBackground = () => {
   const ref = useRef();
@@ -53,7 +56,7 @@ const HawanBackground = () => {
     easing.damp(
       ref.current.style,
       "display",
-      scroll.offset > 0.5 && scroll.offset < 0.85 ? "block" : "none",
+      scroll.offset > 0.5 && scroll.offset < 0.88 ? "block" : "none",
       0.2,
       delta
     );
@@ -61,7 +64,7 @@ const HawanBackground = () => {
     easing.damp(
       ref.current.style,
       "opacity",
-      scroll.offset > 0.78 ? 1 : 0,
+      scroll.offset > 0.78 && scroll.offset < 0.85 ? 1 : 0,
       0.2,
       delta
     );
@@ -171,6 +174,117 @@ const ShaktiBackground = () => {
   );
 };
 
+const Testimonials = () => {
+  const ref = useRef();
+  const mandalaRef = useRef();
+  const wheelRef = useRef();
+  const [modalOpen, setModalOpen] = useState(null);
+  const scroll = useScroll();
+
+  const openModal = (index) => {
+    setModalOpen(index);
+  };
+
+  const closeModal = () => {
+    setModalOpen(null);
+  };
+  useFrame((state, delta) => {
+    easing.damp(
+      ref.current.style,
+      "display",
+      scroll.offset > 0.85 ? "block" : "none",
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      ref.current.style,
+      "opacity",
+      scroll.offset > 0.95 ? 1 : 0,
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      mandalaRef.current.style,
+      "transform",
+      scroll.offset > 0.95 ? "scale(2.4) rotate(90deg)" : "scale(1.5)",
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      wheelRef.current.style,
+      "transform",
+      scroll.offset > 0.95
+        ? "translateY(0%) scale(1)"
+        : "translateY(300%) scale(0.5)",
+      0.2,
+      delta
+    );
+  });
+  return (
+    <t6.In>
+      <div ref={ref} className="testimonials">
+        <div className="testimonials-bg">
+          <img ref={mandalaRef} src="mandala.png" alt="mandala" />
+        </div>
+        <div className="testimonials-text">
+          <p>Testimonial</p>
+        </div>
+        <div ref={wheelRef} className="wheel">
+          <img src="wheel.png" alt="wheel-testimonial" className="wheel-bg" />
+          <img
+            src="t-one.png"
+            alt="testimonial-one"
+            className="testimonial-one"
+            onClick={() => openModal(1)}
+          />
+          <img
+            src="t-two.png"
+            alt="testimonial-two"
+            className="testimonial-two"
+            onClick={() => openModal(2)}
+          />
+          <img
+            src="t-three.png"
+            alt="testimonial-three"
+            className="testimonial-three"
+            onClick={() => openModal(3)}
+          />
+          <img
+            src="t-four.png"
+            alt="testimonial-four"
+            className="testimonial-four"
+            onClick={() => openModal(4)}
+          />
+          <img
+            src="t-five.png"
+            alt="testimonial-five"
+            className="testimonial-five"
+            onClick={() => openModal(5)}
+          />
+        </div>
+      </div>
+      {modalOpen === 1 && (
+        <TestimonialModal index={modalOpen} onClose={closeModal} />
+      )}
+      {modalOpen === 2 && (
+        <TestimonialModal index={modalOpen} onClose={closeModal} />
+      )}
+      {modalOpen === 3 && (
+        <TestimonialModal index={modalOpen} onClose={closeModal} />
+      )}
+      {modalOpen === 4 && (
+        <TestimonialModal index={modalOpen} onClose={closeModal} />
+      )}
+      {modalOpen === 5 && (
+        <TestimonialModal index={modalOpen} s onClose={closeModal} />
+      )}
+    </t6.In>
+  );
+};
+
 const SubContent = () => {
   const ref = useRef();
   const refTwo = useRef();
@@ -240,7 +354,7 @@ const SubContent = () => {
     easing.damp(
       refFive.current.style,
       "transform",
-      scroll.offset > 0.32 ? "translate(-50%, -50%) scale(0.5)" : "",
+      scroll.offset > 0.4 ? "translate(-50%, -50%) scale(0.5)" : "",
       0.2,
       delta
     );
@@ -248,7 +362,7 @@ const SubContent = () => {
     easing.damp(
       refSix.current.style,
       "color",
-      scroll.offset > 0.32 ? "black" : "",
+      scroll.offset > 0.4 ? "black" : "",
       0.2,
       delta
     );
@@ -419,6 +533,7 @@ function App() {
 
   return (
     <div ref={appRef} className="app">
+      <Navbar />
       <div className="hero-heading">
         <div className="text-block">
           <t2.Out />
@@ -430,11 +545,12 @@ function App() {
         <t5.Out />
         <t4.Out />
       </div>
+      <t6.Out />
 
       <Canvas
         // gl={{ alpha: true }}
         camera={{
-          position: [0, 10, 50],
+          position: [0, 0, 10],
           fov: 70,
           near: 1,
           far: 1000,
@@ -448,6 +564,7 @@ function App() {
             <ShaktiBackground />
             <HawanBackground />
             <SubContent />
+            <Testimonials />
             <Environment near={0.1} far={1000} background files="nebula.hdr" />
 
             {/* <HeroContent /> */}

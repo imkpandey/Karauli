@@ -40,7 +40,7 @@ function Ground() {
   const shiva = useVideoTexture("/alpha-shiv.webm");
   const earth = useVideoTexture("/earth-alpha.webm");
   return (
-    <>
+    <group position={[0, 0, 0]}>
       {/* <mesh rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
         <planeGeometry attach="geometry" args={[50, 150]} />
         <MeshReflectorMaterial
@@ -59,7 +59,7 @@ function Ground() {
       </mesh> */}
       <mesh position={[10, -20, -180]}>
         <planeGeometry attach="geometry" args={[450, 300]} />
-        <meshStandardMaterial map={shiva} transparent />
+        <meshBasicMaterial map={shiva} transparent />
       </mesh>
       <Text font="Gilroy-Regular.ttf" fontSize={6} position={[-2, 11, -40]}>
         Welcome To
@@ -107,10 +107,10 @@ function Ground() {
       </Text>
       <mesh position={[0, -10, -58]}>
         <planeGeometry attach="geometry" args={[300, 180]} />
-        <meshStandardMaterial map={earth} transparent />
+        <meshBasicMaterial map={earth} transparent />
       </mesh>
       {/* <EarthModel position={[0, -50, -40]} scale={40} /> */}
-    </>
+    </group>
   );
 }
 

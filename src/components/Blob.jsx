@@ -32,25 +32,25 @@ export default function Blob({ color, vec = new THREE.Vector3(), ...props }) {
     <group {...props}>
       <Sphere
         castShadow
-        onPointerEnter={() => (strength.current = 0.3)}
+        onPointerEnter={() => (strength.current = 0.8)}
         onPointerLeave={() => (strength.current = 0)}
         ref={ref}
         args={[1.2, 128, 128]}
       >
         <LayerMaterial
-          color={"black"}
+          color={"white"}
           lighting={"physical"}
-          transmission={1}
+          transmission={0.995}
           roughness={0}
-          thickness={1}
+          thickness={2}
         >
           {/* <Depth
-              near={0.4854}
-              far={0.7661999999999932}
-              origin={[-0.4920000000000004, 0.4250000000000003, 0]}
-              colorA={"#fec5da"}
-              colorB={"#d6e7f2"}
-            /> */}
+            near={0.4854}
+            far={0.76619999999932}
+            origin={[-0.4920000000000004, 0.4250000000000003, 0]}
+            colorA={"#e9f2f8"}
+            colorB={"#c3dcec"}
+          /> */}
           <Displace ref={displaceRef} strength={0} scale={2} />
         </LayerMaterial>
       </Sphere>
