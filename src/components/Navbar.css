@@ -170,7 +170,7 @@
   cursor: pointer;
 }
 
-.close-btn:hover {
+.close:hover {
   color: #f00;
 }
 

@@ -42,15 +42,15 @@ export default function Blob({ color, vec = new THREE.Vector3(), ...props }) {
           lighting={"physical"}
           transmission={0.995}
           roughness={0}
-          thickness={2}
+          thickness={0}
         >
-          {/* <Depth
+          <Depth
             near={0.4854}
             far={0.76619999999932}
             origin={[-0.4920000000000004, 0.4250000000000003, 0]}
             colorA={"#e9f2f8"}
-            colorB={"#c3dcec"}
-          /> */}
+            colorB={"#ffffff"}
+          />
           <Displace ref={displaceRef} strength={0} scale={2} />
         </LayerMaterial>
       </Sphere>

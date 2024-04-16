@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame } from "@react-three/fiber";
-import "./App.css";
+import "./App.scss";
 import Experience from "./components/Experience";
 import {
   Suspense,
@@ -573,6 +573,9 @@ function App() {
             <HawanBackground />
             <SubContent />
             <Testimonials />
+            <Environment
+              files={["nebula.webp", "nebula-gainmap.webp", "nebula.json"]}
+            />
 
             {/* <HeroContent /> */}
             {/* <HeroHeading /> */}
