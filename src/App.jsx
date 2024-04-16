@@ -33,6 +33,7 @@ const t3 = tunnel();
 const t4 = tunnel();
 const t5 = tunnel();
 const t6 = tunnel();
+const t7 = tunnel();
 
 const HawanBackground = () => {
   const ref = useRef();
@@ -299,6 +300,8 @@ const SubContent = () => {
   const refFour = useRef();
   const refFive = useRef();
   const refSix = useRef();
+  const refSeven = useRef();
+  const refEight = useRef();
   const scroll = useScroll();
 
   useFrame((state, delta) => {
@@ -373,6 +376,38 @@ const SubContent = () => {
       0.2,
       delta
     );
+
+    easing.damp(
+      refSeven.current.style,
+      "transform",
+      scroll.offset > 0.53 ? "translate(-50%, -50%)" : "",
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      refEight.current.style,
+      "transform",
+      scroll.offset > 0.53 ? "translate(-50%, -50%)" : "",
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      refSeven.current.style,
+      "opacity",
+      scroll.offset > 0.53 && scroll.offset < 0.55 ? "1" : "0",
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      refEight.current.style,
+      "opacity",
+      scroll.offset > 0.73 && scroll.offset < 0.78 ? "1" : "0",
+      0.2,
+      delta
+    );
   });
   return (
     <t4.In>
@@ -443,6 +478,12 @@ const SubContent = () => {
           </p>
           <p className="bottom-text">FOR BETTER LIVING</p>
         </div>
+      </div>
+      <div ref={refSeven} className="text-one-bg">
+        <img src="text-one.png" alt="text-one" />
+      </div>
+      <div ref={refEight} className="text-two-bg">
+        <img src="text-two.png" alt="text-two" />
       </div>
     </t4.In>
   );
@@ -556,7 +597,6 @@ function App() {
       <t6.Out />
 
       <Canvas
-        gl={{ alpha: true }}
         camera={{
           position: [0, 0, 10],
           fov: 70,
@@ -576,7 +616,6 @@ function App() {
             <Environment
               files={["nebula.webp", "nebula-gainmap.webp", "nebula.json"]}
             />
-
             {/* <HeroContent /> */}
             {/* <HeroHeading /> */}
             {/* <OrbitControls /> */}
