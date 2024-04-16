@@ -2,7 +2,14 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import "./App.css";
 import Experience from "./components/Experience";
-import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  Suspense,
+  useDeferredValue,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Environment,
   Html,
@@ -548,7 +555,7 @@ function App() {
       <t6.Out />
 
       <Canvas
-        // gl={{ alpha: true }}
+        gl={{ alpha: true }}
         camera={{
           position: [0, 0, 10],
           fov: 70,
@@ -565,7 +572,6 @@ function App() {
             <HawanBackground />
             <SubContent />
             <Testimonials />
-            <Environment near={0.1} far={1000} background files="nebula.hdr" />
 
             {/* <HeroContent /> */}
             {/* <HeroHeading /> */}
