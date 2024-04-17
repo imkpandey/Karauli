@@ -38,7 +38,9 @@ export function EarthModel(props) {
 
 function Ground() {
   const shiva = useVideoTexture("/alpha-shiv.webm");
-  const earth = useVideoTexture("/earth-alpha.webm");
+  const earth = useVideoTexture(
+    "https://cdn.jsdelivr.net/gh/imkpandey/Karauli@master/public/earth-alpha.webm"
+  );
   return (
     <group position={[0, 0, 0]}>
       {/* <mesh rotation={[-Math.PI / 2, 0, Math.PI / 2]}>

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame } from "@react-three/fiber";
-import "./App.scss";
+import "./App.css";
 import Experience from "./components/Experience";
 import {
   Suspense,
@@ -396,7 +396,15 @@ const SubContent = () => {
     easing.damp(
       refSeven.current.style,
       "opacity",
-      scroll.offset > 0.53 && scroll.offset < 0.55 ? "1" : "0",
+      scroll.offset > 0.53 ? "1" : "0",
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      refSeven.current.style,
+      "display",
+      scroll.offset > 0.56 ? "none" : "block",
       0.2,
       delta
     );
@@ -614,7 +622,12 @@ function App() {
             <SubContent />
             <Testimonials />
             <Environment
+              background
               files={["nebula.webp", "nebula-gainmap.webp", "nebula.json"]}
+              backgroundIntensity={1}
+              environmentIntensity={1}
+              backgroundRotation={[Math.PI * 100, -10, 0]}
+              environmentRotation={[Math.PI * 100, -10, 0]}
             />
             {/* <HeroContent /> */}
             {/* <HeroHeading /> */}
