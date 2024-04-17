@@ -380,7 +380,7 @@ const SubContent = () => {
     easing.damp(
       refSeven.current.style,
       "transform",
-      scroll.offset > 0.53 ? "translate(-50%, -50%)" : "",
+      scroll.offset > 0.51 ? "translate(-50%, -50%)" : "",
       0.2,
       delta
     );
@@ -396,7 +396,7 @@ const SubContent = () => {
     easing.damp(
       refSeven.current.style,
       "opacity",
-      scroll.offset > 0.53 ? "1" : "0",
+      scroll.offset > 0.51 ? "1" : "0",
       0.2,
       delta
     );
@@ -404,7 +404,7 @@ const SubContent = () => {
     easing.damp(
       refSeven.current.style,
       "display",
-      scroll.offset > 0.56 ? "none" : "block",
+      scroll.offset > 0.55 ? "none" : "block",
       0.2,
       delta
     );
@@ -412,7 +412,15 @@ const SubContent = () => {
     easing.damp(
       refEight.current.style,
       "opacity",
-      scroll.offset > 0.73 && scroll.offset < 0.78 ? "1" : "0",
+      scroll.offset > 0.7 && scroll.offset < 0.78 ? "1" : "0",
+      0.2,
+      delta
+    );
+
+    easing.damp(
+      refEight.current.style,
+      "display",
+      scroll.offset > 0.78 ? "none" : "block",
       0.2,
       delta
     );
@@ -609,7 +617,7 @@ function App() {
           position: [0, 0, 10],
           fov: 70,
           near: 1,
-          far: 1000,
+          far: 10000,
         }}
       >
         {/* <OrbitControls makeDefault /> */}

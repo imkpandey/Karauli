@@ -17,7 +17,7 @@ function Planets() {
 
   useFrame((state, delta) => {
     // For moving in the x-axis between offsets 0.22 and 0.5
-    if (scroll.offset >= 0.22 && scroll.offset <= 0.5) {
+    if (scroll.offset >= 0.22 && scroll.offset <= 0.55) {
       const newX1 = THREE.MathUtils.lerp(
         -70,
         0,
@@ -31,6 +31,13 @@ function Planets() {
 
       meshOneRef.current.position.x = newX1;
       meshTwoRef.current.position.x = newX2;
+    } else {
+      // Reset the X position if we scroll back before the 0.22 offset
+      const resetX1 = -300;
+      const resetX2 = 300;
+
+      meshOneRef.current.position.x = resetX1;
+      meshTwoRef.current.position.x = resetX2;
     }
 
     // For moving in the z-axis when the offset is greater than 0.5

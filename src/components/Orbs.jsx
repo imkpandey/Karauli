@@ -52,6 +52,12 @@ function Orbs() {
   let animationStartTime;
 
   useFrame((state, delta) => {
+    if (scroll.offset < 0.53) {
+      orbsRef.current.visible = false;
+    } else {
+      orbsRef.current.visible = true;
+    }
+
     if (scroll.offset > 0.8 && scroll.offset < 0.87) {
       outerOrbsRef.current.position.z = -50;
     }

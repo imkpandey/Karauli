@@ -38,7 +38,7 @@ export default function Blob({ color, vec = new THREE.Vector3(), ...props }) {
         args={[1.2, 128, 128]}
       >
         <LayerMaterial
-          color={"white"}
+          color={"black"}
           lighting={"physical"}
           transmission={0.995}
           roughness={0}
@@ -49,7 +49,7 @@ export default function Blob({ color, vec = new THREE.Vector3(), ...props }) {
             far={0.76619999999932}
             origin={[-0.4920000000000004, 0.4250000000000003, 0]}
             colorA={"#e9f2f8"}
-            colorB={"#ffffff"}
+            colorB={"#000000"}
           />
           <Displace ref={displaceRef} strength={0} scale={2} />
         </LayerMaterial>

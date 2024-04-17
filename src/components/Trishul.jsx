@@ -33,7 +33,9 @@ export function Trishul(props) {
     }
 
     if (scroll.offset < 0.87) {
-      ref.current.position.y = -800;
+      ref.current.visible = false;
+    } else {
+      ref.current.visible = true;
     }
 
     if (scroll.offset > 0.87 && !animationStarted) {
