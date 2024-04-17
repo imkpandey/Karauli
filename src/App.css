@@ -625,7 +625,7 @@ canvas {
   height: 100vh;
   z-index: 1;
   pointer-events: none;
-  transition: 0.3s ease-in-out;
+  transition: 0.15s ease-in-out;
 }
 
 .hawan-bg {
@@ -1036,7 +1036,6 @@ canvas {
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
   border-radius: 0 0 50px 50px;
-  border-radius: 10px;
   padding: 20px;
   width: 100%;
   height: 60%;

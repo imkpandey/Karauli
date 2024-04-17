@@ -412,7 +412,7 @@ const SubContent = () => {
     easing.damp(
       refEight.current.style,
       "opacity",
-      scroll.offset > 0.7 && scroll.offset < 0.78 ? "1" : "0",
+      scroll.offset > 0.725 && scroll.offset < 0.78 ? "1" : "0",
       0.2,
       delta
     );
@@ -631,8 +631,8 @@ function App() {
             <Testimonials />
             <Environment
               files={["nebula.webp", "nebula-gainmap.webp", "nebula.json"]}
-              backgroundIntensity={1}
-              environmentIntensity={1}
+              backgroundIntensity={100}
+              environmentIntensity={100}
             />
             {/* <HeroContent /> */}
             {/* <HeroHeading /> */}
