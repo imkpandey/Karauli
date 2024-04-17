@@ -622,12 +622,9 @@ function App() {
             <SubContent />
             <Testimonials />
             <Environment
-              background
               files={["nebula.webp", "nebula-gainmap.webp", "nebula.json"]}
               backgroundIntensity={1}
               environmentIntensity={1}
-              backgroundRotation={[Math.PI * 100, -10, 0]}
-              environmentRotation={[Math.PI * 100, -10, 0]}
             />
             {/* <HeroContent /> */}
             {/* <HeroHeading /> */}
