@@ -589,6 +589,7 @@ function App() {
 
   return (
     <div ref={appRef} className="app">
+      <img src="nebula-bg.png" alt="bg" className="nebula-bg" />
       <Navbar />
       <div className="hero-heading">
         <div className="text-block">
