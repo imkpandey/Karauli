@@ -20,6 +20,8 @@ const LoginModal = ({ onClose }) => {
   return (
     <div className="modal">
       <div className="modal-content" ref={modalRef}>
+        <div className="blur-circle-one" />
+        <div className="blur-circle-two" />
         <div className="login-title">
           <h2>Login</h2>
           <hr />
