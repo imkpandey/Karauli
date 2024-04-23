@@ -51,6 +51,10 @@ function Orbs() {
   const animationDuration = 3;
   let animationStartTime;
 
+  let orbsScatterAnimationStarted = false;
+  const orbsScatterAnimationDuration = 5;
+  let orbsScatterAnimationStartTime;
+
   useFrame((state, delta) => {
     if (scroll.offset < 0.53) {
       orbsRef.current.visible = false;
@@ -60,6 +64,7 @@ function Orbs() {
 
     if (scroll.offset > 0.8 && scroll.offset < 0.87) {
       outerOrbsRef.current.position.z = -50;
+      outerOrbsRef.current.scale.set(0.5, 0.5, 0.5);
     }
     if (scroll.offset > 0.8) {
       orbsRef.current.position.z = -2000;
@@ -79,7 +84,6 @@ function Orbs() {
       // outerOrbsRef.current.rotation.x = Math.PI / 2;
       // outerOrbsRef.current.position.z = -50;
       // outerOrbsRef.current.rotation.z += delta / 2;
-      outerOrbsRef.current.scale.set(0.5, 0.5, 0.5);
       innerOrbsRef.current.visible = false;
     } else {
       orbsRef.current.position.z = -1550;
@@ -124,6 +128,28 @@ function Orbs() {
       if (progress === 1) {
         animationStarted = false;
         animationStartTime = undefined;
+      }
+    }
+
+    if (scroll.offset > 0.92 && !orbsScatterAnimationStarted) {
+      orbsScatterAnimationStarted = true;
+      orbsScatterAnimationStartTime = state.clock.elapsedTime;
+    }
+
+    if (orbsScatterAnimationStarted) {
+      const elapsedTime =
+        state.clock.elapsedTime - orbsScatterAnimationStartTime;
+
+      const progress = Math.min(elapsedTime / orbsScatterAnimationDuration, 1);
+
+      outerOrbsRef.current.scale.lerp(
+        new THREE.Vector3(1.2, 1.2, 1.2),
+        progress
+      );
+
+      if (progress === 1) {
+        orbsScatterAnimationStarted = false;
+        orbsScatterAnimationStartTime = undefined;
       }
     }
   });

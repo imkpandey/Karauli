@@ -83,10 +83,10 @@ const MiniStars = () => {
 
 function Stars(props) {
   const ref = useRef();
-  const numPoints = 4000;
+  const numPoints = 1500;
 
   const [sphere] = useState(
-    () => random.inSphere(new Float32Array(numPoints), { radius: 1500 })
+    () => random.inSphere(new Float32Array(numPoints), { radius: 2000 })
     // random.inBox(new Float32Array(numPoints), { sides: [100, 200, 100] })
   );
 

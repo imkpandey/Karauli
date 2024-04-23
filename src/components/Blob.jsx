@@ -17,7 +17,7 @@ export default function Blob({ color, vec = new THREE.Vector3(), ...props }) {
 
     if (displaceRef.current.strength !== strength.current) {
       displaceRef.current.strength = MathUtils.lerp(
-        displaceRef.current.strength, //
+        displaceRef.current.strength,
         strength.current,
         0.1
       );
@@ -38,23 +38,21 @@ export default function Blob({ color, vec = new THREE.Vector3(), ...props }) {
         args={[1.2, 128, 128]}
       >
         <LayerMaterial
-          color={"black"}
+          color={"#ffffff"}
           lighting={"physical"}
-          transmission={0.995}
+          transmission={1.2}
           roughness={0}
           thickness={0}
         >
           <Depth
-            near={0.4854}
-            far={0.76619999999932}
-            origin={[-0.4920000000000004, 0.4250000000000003, 0]}
-            colorA={"#e9f2f8"}
-            colorB={"#000000"}
+            near={-0.5854}
+            far={0.16619999999932}
+            colorA={"#ffffff"}
+            colorB={"#ffffff"}
           />
           <Displace ref={displaceRef} strength={0} scale={2} />
         </LayerMaterial>
       </Sphere>
-      {/* <Pointer /> */}
     </group>
   );
 }

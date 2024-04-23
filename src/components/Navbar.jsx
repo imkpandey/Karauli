@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Navbar.css";
+import { useLocation } from "react-router-dom";
 
 const LoginModal = ({ onClose }) => {
   const modalRef = useRef();
@@ -112,9 +113,43 @@ const ContactModal = ({ onClose }) => {
   );
 };
 
-const Navbar = () => {
+const FaqModal = ({ onClose }) => {
+  const modalRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
+  return (
+    <div className="faq-modal">
+      <div className="faq-modal-content" ref={modalRef}></div>
+    </div>
+  );
+};
+
+const Navbar = ({ isDark }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isContactOpen, setContactOpen] = useState(false);
+  const [isFaqOpen, setFaqOpen] = useState(false);
+  const [isDarkMode, setDarkMode] = useState(isDark);
+  const location = useLocation();
+
+  const handleFaqClick = () => {
+    setFaqOpen(true);
+  };
+
+  const handleFaqClose = () => {
+    setFaqOpen(false);
+  };
 
   const handleContactClick = () => {
     setContactOpen(true);
@@ -135,18 +170,59 @@ const Navbar = () => {
     <>
       <div className="navbar">
         <div className="navbar-left">
-          <a className="active" href="#home">
+          <a
+            className="active"
+            href="#home"
+            style={{
+              color: isDark ? "black" : "white",
+            }}
+          >
             Home
           </a>
-          <a href="#store">Store</a>
-          <a href="#instructions">Instructions</a>
-          <a href="#faq">FAQ</a>
+          <a
+            href="#store"
+            style={{
+              color: isDark ? "black" : "white",
+            }}
+          >
+            Store
+          </a>
+          <a
+            href="#instructions"
+            style={{
+              color: isDark ? "black" : "white",
+            }}
+          >
+            Instructions
+          </a>
+          <a
+            href="#faq"
+            onClick={handleFaqClick}
+            style={{
+              color: isDark ? "black" : "white",
+            }}
+          >
+            FAQ
+          </a>
         </div>
         <div className="navbar-right">
-          <a href="#contact" onClick={handleContactClick}>
+          <a
+            href="#contact"
+            onClick={handleContactClick}
+            style={{
+              color: isDark ? "black" : "white",
+            }}
+          >
             Contact Us
           </a>
-          <a href="#register">Register</a>
+          <a
+            href="#register"
+            style={{
+              color: isDark ? "black" : "white",
+            }}
+          >
+            Register
+          </a>
           <a className="login" href="#login" onClick={handleLoginClick}>
             Login
           </a>
@@ -154,6 +230,7 @@ const Navbar = () => {
       </div>
       {isModalOpen && <LoginModal onClose={handleLoginClose} />}
       {isContactOpen && <ContactModal onClose={handleContactClose} />}
+      {isFaqOpen && <FaqModal onClose={handleFaqClose} />}
     </>
   );
 };

@@ -1,0 +1,130 @@
+.instructions {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.instructions-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.instructions-heading {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 1rem;
+
+    span {
+      font-weight: 400;
+      font-size: 5rem;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  h6 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: gray;
+    text-align: center;
+    display: flex;
+  }
+}
+
+.container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background-color: lightorange;
+  border-radius: 50%;
+}
+
+.center-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.circular-image {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: orange;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.circular-image:nth-child(1) {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.circular-image:nth-child(2) {
+  top: 25%;
+  left: 90%;
+  transform: translateX(-50%);
+}
+
+.circular-image:nth-child(3) {
+  top: 70%;
+  left: 70%;
+  transform: translateX(-50%);
+}
+
+.circular-image:nth-child(4) {
+  top: 90%;
+  left: 25%;
+  transform: translateX(-50%);
+}
+
+.circular-image:nth-child(5) {
+  top: 90%;
+  left: -25%;
+  transform: translateX(-50%);
+}
+
+.circular-image:nth-child(6) {
+  top: 70%;
+  left: -70%;
+  transform: translateX(-50%);
+}
+
+.circular-image:nth-child(7) {
+  top: 25%;
+  left: -90%;
+  transform: translateX(-50%);
+}
+
+.circular-image:nth-child(8) {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
